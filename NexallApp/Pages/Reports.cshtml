@@ -7,16 +7,35 @@
     <input type="number" id="minSpeed" name="minSpeed" />
 
     <label for="fromDate">From Date:</label>
-    <input type="date" id="fromDate" name="fromDate" />
+    <input type="date" id="fromDate" name="fromDate" asp-for="FromDate" />
 
     <label for="toDate">To Date:</label>
-    <input type="date" id="toDate" name="toDate" />
+    <input type="date" id="toDate" name="toDate" asp-for="ToDate" />
 
     <button type="submit" name="showResults">Show results</button>
+    <input type="hidden" name="pageNumber" value="1" />
 </form>
 
 @if (Request.Query.ContainsKey("showResults") || Request.Query.ContainsKey("pageNumber"))
 {
+
+    <div class="filter-conditions">
+        @if (Model.MinSpeed > 0)
+        {
+            <p>Minimum Speed: @Model.MinSpeed</p>
+        }
+
+        @if (Model.FromDate != default(DateTime))
+        {
+            <p>From Date: @Model.FromDate.ToString("dd/MM/yyyy")</p>
+        }
+
+        @if (Model.ToDate != default(DateTime))
+        {
+            <p>To Date (excluding): @Model.ToDate.ToString("dd/MM/yyyy")</p>
+        }
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -37,7 +56,7 @@
         </tbody>
     </table>
  
-    <nav>
+@*     <nav>
         <ul class="pagination">
             @for (int i = 1; i <= Model.TotalPages; i++)
             {
@@ -46,5 +65,24 @@
                 </li>
             }
         </ul>
+    </nav> *@
+
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link"
+                       asp-page="/Reports"
+                       asp-route-pageNumber="@i"
+                       asp-route-minSpeed="@Model.MinSpeed"
+                       asp-route-fromDate="@Model.FromDate"
+                       asp-route-toDate="@Model.ToDate">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
     </nav>
+
 }

@@ -7,7 +7,7 @@ namespace NexallApp.Pages
     public class FileUploadModel : PageModel
     {
         [BindProperty]
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
 
         private readonly DataLoaderService _dataLoaderService;
 

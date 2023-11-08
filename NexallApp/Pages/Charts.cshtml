@@ -6,17 +6,21 @@
 
 <form method="get">
 	<label for="selectedDate">Selected Date:</label>
-	<input type="date" id="selectedDate"  name="selectedDate"/>
+    <input type="date" id="selectedDate" name="selectedDate" asp-for="SelectedDate"/>
 
 	<button id="generateChartButton" type ="submit" name="generateChart">Generate Average Speed Chart</button>
 </form>
 
 <canvas id="speedChart" width="400" height="200" style="display: none;"></canvas>
 
- @if (Request.Query.ContainsKey("generateChart")){ 
+ @if (Request.Query.ContainsKey("generateChart")){
 
-	 // generate chart displaying average speed for each hour
+    <div class="Chart info">
+        <p>Data for: @Model.SelectedDate.Date.ToString("dd/MM/yyyy")</p>
+    </div>
+
     <script>
+
         const speedChart = document.getElementById('speedChart');
         speedChart.style.display = 'block';
         var ctx = document.getElementById('speedChart').getContext('2d');
@@ -41,5 +45,6 @@
                 }
             }
         });
+
     </script>
 }

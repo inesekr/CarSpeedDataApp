@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-namespace NexallApp
+﻿namespace NexallApp
 {
     public class DataLoaderService
     {
@@ -26,7 +25,6 @@ namespace NexallApp
                     };
                     _context.CarData.Add(carData);
                 }
-
             }
 
             _context.SaveChanges();

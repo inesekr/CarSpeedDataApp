@@ -15,14 +15,23 @@ namespace NexallApp.Pages
         }
 		public List<double> AverageSpeedByHour { get; set; }
 
-		public void OnGet(DateTime selectedDate)
-		{
+        [BindProperty(SupportsGet = true)]
+        public DateTime SelectedDate { get; set; }
+
+        //public void OnGet(DateTime selectedDate)
+
+              public void OnGet()
+        {
+          
             IQueryable<CarData> query = _context.CarData;
-			query = query.Where(c => c.Date.Date ==  selectedDate.Date);
-            //_context.Database.SetCommandTimeout(300);
+            if (SelectedDate != default)
+            {
+                query = query.Where(c => c.Date.Date == SelectedDate.Date);
+            }
+            //query = query.Where(c => c.Date.Date ==  SelectedDate.Date);
+            _context.Database.SetCommandTimeout(360);
             var data = query.ToList();
             AverageSpeedByHour = CalculateAverageSpeedByHour(data);
-			
 		}
 
 		private List<double> CalculateAverageSpeedByHour(List<CarData> data)
@@ -45,7 +54,6 @@ namespace NexallApp.Pages
 			}
 
 			return averageSpeedByHour;
-		}
-			
+		}	
 	}
 }

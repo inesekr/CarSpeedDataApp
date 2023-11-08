@@ -8,7 +8,7 @@ namespace NexallApp
         {
         }
 
-        // Define your DbSet properties for each entity/table here
+        // Defining DbSet properties for each table:
         public DbSet<CarData> CarData { get; set; }
     }
 }

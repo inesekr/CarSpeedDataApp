@@ -14,7 +14,6 @@ namespace NexallApp
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("nexallDb")));
 
-            // Register DataLoaderService
             builder.Services.AddScoped<DataLoaderService>();
 
             var app = builder.Build();
@@ -31,14 +30,6 @@ namespace NexallApp
             app.UseAuthorization();
 
             app.MapRazorPages();
-
-
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var dataLoader = services.GetRequiredService<DataLoaderService>();
-            //    dataLoader.LoadDataFromFile("speed.txt");
-            //}
 
             app.Run();
         }
