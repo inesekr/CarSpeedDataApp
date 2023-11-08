@@ -1,0 +1,45 @@
+﻿@page "/charts"
+@model NexallApp.Pages.ChartsModel
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<form method="get">
+	<label for="selectedDate">Selected Date:</label>
+	<input type="date" id="selectedDate"  name="selectedDate"/>
+
+	<button id="generateChartButton" type ="submit" name="generateChart">Generate Average Speed Chart</button>
+</form>
+
+<canvas id="speedChart" width="400" height="200" style="display: none;"></canvas>
+
+ @if (Request.Query.ContainsKey("generateChart")){ 
+
+	 // generate chart displaying average speed for each hour
+    <script>
+        const speedChart = document.getElementById('speedChart');
+        speedChart.style.display = 'block';
+        var ctx = document.getElementById('speedChart').getContext('2d');
+   
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Enumerable.Range(0, 24).Select(i => $"{i}:00"))),
+                datasets: [{
+                    label: 'Average Speed',
+                    data: @Html.Raw(Json.Serialize(Model.AverageSpeedByHour)),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

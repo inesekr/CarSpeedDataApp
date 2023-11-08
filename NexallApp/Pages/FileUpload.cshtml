@@ -1,0 +1,26 @@
+﻿@page "/fileupload"
+@model NexallApp.Pages.FileUploadModel
+
+<form method="post">
+    <div class="form-group">
+        <label for="filePath">File Path:</label>
+        <input type="text" class="form-control" id="filePath" asp-for="FilePath" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload Data</button>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success">
+        @TempData["SuccessMessage"]
+        <button id="closeButton" class="close" aria-label="Close">Close</button>
+    </div>
+}
+
+<script>
+    document.getElementById("closeButton").addEventListener("click", function () {
+        var successMessage = document.getElementById("successMessage");
+        successMessage.style.display = "none"; 
+        window.location.href = "/Index"; 
+    });
+</script>

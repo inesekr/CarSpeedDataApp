@@ -1,0 +1,50 @@
+﻿@page "/reports"
+@model NexallApp.Pages.ReportsModel
+
+
+<form method="get">
+    <label for="minSpeed">Minimum Speed:</label>
+    <input type="number" id="minSpeed" name="minSpeed" />
+
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate" name="fromDate" />
+
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate" name="toDate" />
+
+    <button type="submit" name="showResults">Show results</button>
+</form>
+
+@if (Request.Query.ContainsKey("showResults") || Request.Query.ContainsKey("pageNumber"))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Speed</th>
+                <th>Car Registration Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var carData in Model.FilteredCarData)
+            {
+                <tr>
+                    <td>@carData.Date</td>
+                    <td>@carData.Speed</td>
+                    <td>@carData.CarRegNo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+ 
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-page="/Reports" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
