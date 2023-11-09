@@ -11,7 +11,6 @@ namespace NexallApp.Pages
 		public ChartsModel(ApplicationDbContext context)
 		{
 			_context = context;
-            //_context.Database.SetCommandTimeout(120);
         }
 		public List<double> AverageSpeedByHour { get; set; }
 
@@ -20,7 +19,7 @@ namespace NexallApp.Pages
 
         //public void OnGet(DateTime selectedDate)
 
-              public void OnGet()
+        public void OnGet()
         {
           
             IQueryable<CarData> query = _context.CarData;
@@ -28,9 +27,11 @@ namespace NexallApp.Pages
             {
                 query = query.Where(c => c.Date.Date == SelectedDate.Date);
             }
-            //query = query.Where(c => c.Date.Date ==  SelectedDate.Date);
+            
             _context.Database.SetCommandTimeout(360);
             var data = query.ToList();
+            _context.Database.SetCommandTimeout(360);
+
             AverageSpeedByHour = CalculateAverageSpeedByHour(data);
 		}
 

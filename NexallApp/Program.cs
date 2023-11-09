@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace NexallApp
 {
@@ -11,8 +12,11 @@ namespace NexallApp
             // Add services to the container.
             builder.Services.AddRazorPages();
 
+            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //   options.UseSqlServer(builder.Configuration.GetConnectionString("nexallDbServer")));
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("nexallDb")));
+                options.UseSqlite(builder.Configuration.GetConnectionString("nexallDbSqlite")));
 
             builder.Services.AddScoped<DataLoaderService>();
 
