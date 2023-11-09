@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NexallApp.Pages
 {
@@ -12,16 +12,21 @@ namespace NexallApp.Pages
         {
             _context = context; 
         }
-        public List<CarData> FilteredCarData { get; set; }
 
+        public List<CarData> FilteredCarData { get; set; }
         public int TotalPages { get; set; }
         public int Page { get; set; }
-
         public int MinSpeed { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public DateTime FromDate { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public DateTime ToDate { get; set; }
 
-        public void OnGet(int minSpeed, DateTime fromDate, DateTime toDate, int pageNumber = 1)
+        public int TotalItems { get; set; }
+
+        public void OnGet(int minSpeed, int pageNumber = 1)
         {
             int pageSize = 20;
             IQueryable<CarData> query = _context.CarData;
@@ -32,23 +37,24 @@ namespace NexallApp.Pages
                 _context.Database.SetCommandTimeout(300);
             }
 
-            if (fromDate != default(DateTime))
+            if (FromDate != default(DateTime))
             {
-                query = query.Where(c => c.Date >= fromDate);
+                query = query.Where(c => c.Date.Date >= FromDate.Date);
                 _context.Database.SetCommandTimeout(300);
             }
 
-            if (toDate != default(DateTime))
+            if (ToDate != default(DateTime))
             {
-                query = query.Where(c => c.Date <= toDate);
+                ToDate = ToDate.Date.AddDays(1).AddMilliseconds(-1);
+                query = query.Where(c => c.Date.Date <= ToDate.Date);
                 _context.Database.SetCommandTimeout(300);
             }
 
             _context.Database.SetCommandTimeout(300);
-            int totalItems = query.Count();
+            TotalItems = query.Count();
             _context.Database.SetCommandTimeout(300);
 
-            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(TotalItems / (double)pageSize);
 
             if (pageNumber < 1)
             {
@@ -63,16 +69,13 @@ namespace NexallApp.Pages
                 Page = pageNumber;
             }
 
-          
             int skip = (Page - 1) * pageSize;
-            
-
-
+     
             FilteredCarData = query.Skip(skip).Take(pageSize).ToList();
 
             MinSpeed = minSpeed;
-            FromDate = fromDate;
-            ToDate = toDate;
+            FromDate = FromDate.Date;
+            ToDate = ToDate.Date;
 
             Page = pageNumber;
         }

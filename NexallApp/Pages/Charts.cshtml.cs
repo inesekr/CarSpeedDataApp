@@ -17,18 +17,15 @@ namespace NexallApp.Pages
         [BindProperty(SupportsGet = true)]
         public DateTime SelectedDate { get; set; }
 
-        //public void OnGet(DateTime selectedDate)
-
         public void OnGet()
         {
-          
             IQueryable<CarData> query = _context.CarData;
+
             if (SelectedDate != default)
             {
                 query = query.Where(c => c.Date.Date == SelectedDate.Date);
             }
             
-            _context.Database.SetCommandTimeout(360);
             var data = query.ToList();
             _context.Database.SetCommandTimeout(360);
 

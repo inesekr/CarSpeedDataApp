@@ -1,12 +1,11 @@
 ﻿@page "/charts"
 @model NexallApp.Pages.ChartsModel
 
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <form method="get">
 	<label for="selectedDate">Selected Date:</label>
-    <input type="date" id="selectedDate" name="selectedDate" asp-for="SelectedDate"/>
+    <input type="date" id="selectedDate" name="selectedDate" asp-for="SelectedDate" asp-format="{0:yyyy/MM/dd}" />
 
 	<button id="generateChartButton" type ="submit" name="generateChart">Generate Average Speed Chart</button>
 </form>
@@ -15,12 +14,8 @@
 
  @if (Request.Query.ContainsKey("generateChart")){
 
-    <div class="Chart info">
-        <p>Data for: @Model.SelectedDate.Date.ToString("dd/MM/yyyy")</p>
-    </div>
-
     <script>
-
+        
         const speedChart = document.getElementById('speedChart');
         speedChart.style.display = 'block';
         var ctx = document.getElementById('speedChart').getContext('2d');

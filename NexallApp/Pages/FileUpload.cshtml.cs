@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NexallApp.Pages
 {
-   
     public class FileUploadModel : PageModel
     {
         [BindProperty]
@@ -27,7 +26,6 @@ namespace NexallApp.Pages
             RedirectToPage("/Index");
           
             // add error message if empty, or file not found
-          
         }
     }
 }

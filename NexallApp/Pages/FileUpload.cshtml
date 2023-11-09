@@ -15,12 +15,12 @@
         @TempData["SuccessMessage"]
         <button id="closeButton" class="close" aria-label="Close">Close</button>
     </div>
-}
 
-<script>
+    <script>
     document.getElementById("closeButton").addEventListener("click", function () {
         var successMessage = document.getElementById("successMessage");
-        successMessage.style.display = "none"; 
-        window.location.href = "/Index"; 
+        successMessage.style.display = "none";
+        window.location.href = "/Index";
     });
 </script>
+}

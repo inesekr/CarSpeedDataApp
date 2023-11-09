@@ -1,16 +1,15 @@
 ﻿@page "/reports"
 @model NexallApp.Pages.ReportsModel
 
-
 <form method="get">
     <label for="minSpeed">Minimum Speed:</label>
-    <input type="number" id="minSpeed" name="minSpeed" />
+    <input type="number" id="minSpeed" name="minSpeed" asp-for="MinSpeed" />
 
     <label for="fromDate">From Date:</label>
-    <input type="date" id="fromDate" name="fromDate" asp-for="FromDate" />
+    <input type="date" id="fromDate" name="fromDate" asp-for="FromDate" asp-format="{0:yyyy/MM/dd}" />
 
     <label for="toDate">To Date:</label>
-    <input type="date" id="toDate" name="toDate" asp-for="ToDate" />
+    <input type="date" id="toDate" name="toDate" asp-for="ToDate" asp-format="{0:yyyy/MM/dd}" />
 
     <button type="submit" name="showResults">Show results</button>
     <input type="hidden" name="pageNumber" value="1" />
@@ -18,21 +17,15 @@
 
 @if (Request.Query.ContainsKey("showResults") || Request.Query.ContainsKey("pageNumber"))
 {
+    <div>
+        <br>
+        <hr>
+    </div>
 
-    <div class="filter-conditions">
-        @if (Model.MinSpeed > 0)
+    <div class="total-count">
+        @if (Model.TotalItems > 0)
         {
-            <p>Minimum Speed: @Model.MinSpeed</p>
-        }
-
-        @if (Model.FromDate != default(DateTime))
-        {
-            <p>From Date: @Model.FromDate.ToString("dd/MM/yyyy")</p>
-        }
-
-        @if (Model.ToDate != default(DateTime))
-        {
-            <p>To Date (excluding): @Model.ToDate.ToString("dd/MM/yyyy")</p>
+            <p>Total found: @Model.TotalItems</p>
         }
     </div>
 
@@ -56,17 +49,6 @@
         </tbody>
     </table>
  
-@*     <nav>
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.Page ? "active" : "")">
-                    <a class="page-link" asp-page="/Reports" asp-route-pageNumber="@i">@i</a>
-                </li>
-            }
-        </ul>
-    </nav> *@
-
     <nav>
         <ul class="pagination">
             @for (int i = 1; i <= Model.TotalPages; i++)
@@ -75,14 +57,13 @@
                     <a class="page-link"
                        asp-page="/Reports"
                        asp-route-pageNumber="@i"
-                       asp-route-minSpeed="@Model.MinSpeed"
-                       asp-route-fromDate="@Model.FromDate"
-                       asp-route-toDate="@Model.ToDate">
+                       asp-route-minSpeed="@Model.MinSpeed.ToString()"
+                       asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")"
+                       asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">
                         @i
                     </a>
                 </li>
             }
         </ul>
     </nav>
-
 }
