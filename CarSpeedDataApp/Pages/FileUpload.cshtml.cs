@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace NexallApp.Pages
+namespace CarSpeedDataApp.Pages
 {
     public class FileUploadModel : PageModel
     {

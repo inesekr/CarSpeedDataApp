@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NexallApp.Migrations
+namespace CarSpeedDataApp.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration

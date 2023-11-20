@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NexallApp
+namespace CarSpeedDataApp
 {
     public class ApplicationDbContext: DbContext
     {

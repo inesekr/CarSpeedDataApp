@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace NexallApp.Pages
+namespace CarSpeedDataApp.Pages
 {
     public class ReportsModel : PageModel
     {

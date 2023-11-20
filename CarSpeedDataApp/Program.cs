@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace NexallApp
+namespace CarSpeedDataApp
 {
     public class Program
     {
@@ -16,7 +16,7 @@ namespace NexallApp
             //   options.UseSqlServer(builder.Configuration.GetConnectionString("nexallDbServer")));
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("nexallDbSqlite")));
+                options.UseSqlite(builder.Configuration.GetConnectionString("carSpeedDataAppDbSqlite")));
 
             builder.Services.AddScoped<DataLoaderService>();
 

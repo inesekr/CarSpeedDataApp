@@ -1,4 +1,4 @@
-﻿namespace NexallApp
+﻿namespace CarSpeedDataApp
 {
     public class DataLoaderService
     {
